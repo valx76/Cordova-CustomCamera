@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.valx76.cordova" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>CustomCamera</name>
+	<js-module name="CustomCamera" src="www/CustomCamera.js">
+		<clobbers target="cordova.plugins.CustomCamera"/>
+	</js-module>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="CustomCamera">
+				<param name="android-package" value="com.valx76.cordova.CustomCamera"/>
+			</feature>
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.CAMERA" />
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:name="CustomCameraActivity" android:screenOrientation="portrait" />
+		</config-file>
+
+		<source-file src="src/android/CustomCamera.java" target-dir="src/com/valx76/cordova/CustomCamera"/>
+		<source-file src="src/android/CustomCameraActivity.java" target-dir="src/com/valx76/cordova/CustomCameraActivity"/>
+		<source-file src="src/android/CustomCameraPreview.java" target-dir="src/com/valx76/cordova/CustomCameraPreview"/>
+	</platform>
+</plugin>
