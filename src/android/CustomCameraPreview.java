@@ -36,6 +36,7 @@ public class CustomCameraPreview extends SurfaceView implements SurfaceHolder.Ca
 		super(context);
 		this.camera = camera;
 
+		// Creates a Paint (used to stylize the squares around faces)
 		paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setDither(true);
@@ -57,6 +58,10 @@ public class CustomCameraPreview extends SurfaceView implements SurfaceHolder.Ca
 		getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
+	/* 
+	Creates a thread to indirectly call the "onDraw" method.
+	SurfaceView subclasses are not calling onDraw automatically.
+	*/
 	private void createUIRefreshThread() {
 		if (thread != null) {
 			thread.interrupt();
@@ -126,6 +131,7 @@ public class CustomCameraPreview extends SurfaceView implements SurfaceHolder.Ca
 		}
 	}
 	
+	// Tests if the device supports face detection and starts it
 	public void startFaceDetection() {
 		Camera.Parameters params = camera.getParameters();
 		
@@ -136,11 +142,13 @@ public class CustomCameraPreview extends SurfaceView implements SurfaceHolder.Ca
 		}
 	}
 
+	// Keeps the detected faces in an array and refresh the screen
 	public void setFaces(Face[] detectedFaces) {
 		faces = detectedFaces;
 		invalidate();
 	}
 
+	// Draws red squares around detected faces
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// Help: http://developer.android.com/reference/android/hardware/Camera.Face.html#rect
